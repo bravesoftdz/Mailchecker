@@ -51,7 +51,7 @@ implementation
 
 procedure TForm1.tmr1Timer(Sender: TObject);
 var
-  i, NumOfMsgs: Integer; // РљРѕР»РёС‡РµСЃС‚РІРѕ РїРёСЃРµРј
+  i, NumOfMsgs: Integer; // Количество писем
   MessList: TStringList;
 begin
   try
@@ -68,17 +68,17 @@ begin
     begin
       if MessList.Count > 0 then
       begin
-        advlrtwndw1.AlertMessages.Add.Text.Text := 'Р•СЃС‚СЊ ' +
-          IntToStr(MessList.Count) + ' СЃРѕРѕР±С‰РµРЅРёР№ JIRA';
+        advlrtwndw1.AlertMessages.Add.Text.Text := 'Есть ' +
+          IntToStr(MessList.Count) + ' сообщений JIRA';
         advlrtwndw1.Show;
       end;
     end;
     MessList.Free;
     ImapClient.Logout;
-  except // Р•СЃР»Рё РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°- РІС‹РІРѕРґРёРј РµС‘ РІ Memo1
+  except // Если произошла ошибка- выводим её в Memo1
     on E: Exception do
     begin
-      advlrtwndw1.AlertMessages.Add.Text.Text := 'РћС€РёР±РєР° РїРѕРґРєР»СЋС‡РµРЅРёСЏ! ' +
+      advlrtwndw1.AlertMessages.Add.Text.Text := 'Ошибка подключения! ' +
         E.Message;
       advlrtwndw1.Show;
     end;
@@ -110,7 +110,7 @@ begin
  // Form1.Left:=Ini.ReadInteger('Position','X',714);
  // Form1.Top:=Ini.ReadInteger('Position','Y',390);
  Ini.Free;
-  tmr1.Interval := StrToInt(edCheckCount.Text) * 1000; // Р·Р°РґР°С‘Рј РёРЅС‚РµСЂРІР°Р» РїСЂРѕРІРµСЂРєРё
+  tmr1.Interval := StrToInt(edCheckCount.Text) * 1000; // задаём интервал проверки
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
@@ -150,13 +150,13 @@ end;
 procedure TForm1.chkMailClick(Sender: TObject);
 begin
   tmr1.Enabled := chkMail.Checked;
-  if chkMail.Checked then stat1.SimpleText:= 'РџРѕС‡С‚Р° Р±СѓРґРµС‚ РїСЂРѕРІРµСЂРµРЅР° С‡РµСЂРµР· '+edCheckCount.Text +' sec.';
+  if chkMail.Checked then stat1.SimpleText:= 'Почта будет проверена через '+edCheckCount.Text +' sec.';
 end;
 
 procedure TForm1.edCheckCountChange(Sender: TObject);
 begin
  tmr1.Enabled := False;
- tmr1.Interval := StrToInt(edCheckCount.Text) * 1000; // Р·Р°РґР°С‘Рј РёРЅС‚РµСЂРІР°Р» РїСЂРѕРІРµСЂРєРё
+ tmr1.Interval := StrToInt(edCheckCount.Text) * 1000; // задаём интервал проверки
  tmr1.Enabled := True;
 end;
 
